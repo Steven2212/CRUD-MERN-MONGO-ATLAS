@@ -1,0 +1,14 @@
+
+h1{
+  text-align: center;
+
+}
+
+.form-box{
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 616px;
+  height: 416px;
+padding: 15px 20px;
+margin: 35px 320px;
+}
