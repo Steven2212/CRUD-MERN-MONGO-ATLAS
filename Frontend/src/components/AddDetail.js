@@ -53,7 +53,7 @@ const submitbtn = ()=>{
     <h1> Fill Up Company details :</h1>
     
     <div className='form-box'>
-    <form>
+    <form method='post' enctype='multipart/form-data'>
 
   <div className="form-group row">
     <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Company Name :</label>
@@ -64,7 +64,7 @@ const submitbtn = ()=>{
     
     <div className="form-group">
     <label htmlFor="exampleFormControlTextarea1">Company Description :</label>
-    <textarea value={description} className="form-control" id="exampleFormControlTextarea1" rows="2" onChange={(e)=>setDescription(e.target.value)} ></textarea>
+    <textarea value={description} className="form-control" type="text" id="exampleFormControlTextarea1" rows="2" onChange={(e)=>setDescription(e.target.value)} ></textarea>
   </div>
 
   <div className="form-group row">
@@ -83,8 +83,8 @@ const submitbtn = ()=>{
     </div>
   
   <div className="form-group">
-    <label htmlFor="exampleFormControlFile1">Upload Company Logo : </label>
-    <input type="file" className="form-control-file" id="exampleFormControlFile1" value={logo} onChange={(e)=>setLogo(e.target.value)} />
+    <label htmlFor="image">Upload Company Logo : </label>
+    <input type="file" className="form-control-file" id="image" name='file' value={logo} onChange={(e)=>setLogo(e.target.value)} />
   </div>
 
   
