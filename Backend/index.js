@@ -74,12 +74,17 @@ app.delete('/deletedata/:id',async(req,res)=>{
 })
 
 
+
 app.get('/search/:key',async(req,res)=>{
     let result = await User.find(
        {
            "$or":[
                {name:{$regex:req.params.key}},
-               {company:{$regex:req.params.key}}
+               {description:{$regex:req.params.key}},
+               {contactnum:{$regex:req.params.key}},
+               {email:{$regex:req.params.key}},
+               {state:{$regex:req.params.key}},
+               {city:{$regex:req.params.key}}
            ]
        })
        res.send(result)

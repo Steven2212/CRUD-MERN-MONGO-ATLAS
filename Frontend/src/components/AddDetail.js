@@ -69,7 +69,7 @@ const submitbtn = async (e)=>{
 
     return (
     <>
-    <h1> Fill Up Company details :</h1>
+    <h1 className='add-userdetail-h1'> Fill Up User details :</h1>
     
     <div className='form-box'>
     <form method='post' encType='multipart/form-data'>
@@ -77,27 +77,27 @@ const submitbtn = async (e)=>{
   <div className="form-group row">
     <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Company Name :</label>
     <div className="col-sm-8">
-      <input type="text" value={name} autoComplete="off"  className="form-control" id="name" name='name' placeholder="Enter Company Name" onChange={(e)=>setName(e.target.value)} />
+      <input type="text" value={name} autoComplete="off"  className="form-control" id="name-input" name='name' placeholder="Enter Company Name" onChange={(e)=>setName(e.target.value)} />
     </div>
     </div>
     
     <div className="form-group">
-    <label htmlFor="exampleFormControlTextarea1">Company Description :</label>
-    <textarea value={description} className="form-control" autoComplete="off" type="text" id="description" name='description' rows="2" onChange={(e)=>setDescription(e.target.value)} ></textarea>
+    <label htmlFor="exampleFormControlTextarea1">Company <br/>Description :</label>
+    <textarea value={description} className="form-control" autoComplete="off" type="text" id="description-input" name='description' rows="2" onChange={(e)=>setDescription(e.target.value)} ></textarea>
   </div>
 
   <div className="form-group row">
-    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Contact Number :</label>
+    <label htmlFor="inputPassword" id='contactnum-label' className="col-sm-2 col-form-label">Contact Number :</label>
     <div className="col-sm-8">
-      <input type="text"  className="form-control" id="contactnum" name='contactnum'   autoComplete="off" placeholder="Enter Contact Number" value={contactnum} onChange={(e)=>setContactnum(e.target.value)} />
+      <input type="text"  className="form-control" id="contactnum-input" name='contactnum'   autoComplete="off" placeholder="Enter Contact Number" value={contactnum} onChange={(e)=>setContactnum(e.target.value)} />
     </div>
     </div>
   
       
-    <div className="form-group row">
-    <label htmlFor="inputPassword" className="col-sm-2 col-form-label">Contact Email :</label>
+    <div className="form-group row" id='email-container'>
+    <label htmlFor="inputPassword" id='email-label' className="col-sm-2 col-form-label">Contact Email :</label>
     <div className="col-sm-8">
-      <input type="text" className="form-control" autoComplete="off" id="email" name='email' value={email} placeholder="Enter Email Address" onChange={(e)=>setEmail(e.target.value)} />
+      <input type="text" className="form-control" autoComplete="off" id="email-input" name='email' value={email} placeholder="Enter Email Address" onChange={(e)=>setEmail(e.target.value)} />
     </div>
     </div>
   
@@ -106,12 +106,8 @@ const submitbtn = async (e)=>{
     <input type="file" className="form-control-file" id="image" name='file' value={logo} onChange={(e)=>setLogo(e.target.value)} />
   </div> */}
 
-  
+        <div className='Address'>
         <div>
-          {/** Bind changeSelectOptionHandler to onChange method of select.
-           * This method will trigger every time different
-           * option is selected.
-           */}
           <select value={state} onChange={(e)=>setState(e.target.value)}>
             <option>Choose State :</option>
             <option>Maharashtra</option>
@@ -127,9 +123,9 @@ const submitbtn = async (e)=>{
             }
           </select>
         </div>
+        </div>
 
-
-  <button type="submit" className="btn btn-primary" onClick={submitbtn} >Submit</button>
+  <button type="submit" id='add-submitbtn' className="btn btn-primary" onClick={submitbtn} >Submit</button>
 
 </form>
 </div>

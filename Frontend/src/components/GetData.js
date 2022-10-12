@@ -5,7 +5,10 @@ import {Link} from 'react-router-dom'
   const GetData = () => {
 
     const [userlist, setUserlist] = useState([])
-
+    // const [value, setValue] = useState([])
+    // const [dataSource, setDataSource] = useState([userlist])
+    // const [tableFilter, setTableFilter] = useState([])
+    
     useEffect(() => {
         getUserData();
     }, [])
@@ -31,14 +34,26 @@ import {Link} from 'react-router-dom'
   
 //To Search Data :
 
+// function filterData(e){
+//   if(e.target.value !== ""){
+//     const filterTable = dataSource.filter(o=>Object.keys(o).some(k=>
+//       String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())));setTableFilter([...filterTable])
+//   } else{
+//     setValue(e.target.value)
+//     setDataSource([...dataSource])
+//   }
+
+// }
+
 const searchHandle = async (event)=>{
   let key = event.target.value //the words we search
   if(key){     //if any word is searched and it matches, then show that data.
       let result= await fetch(`http://localhost:5000/search/${key}`)
-      result = await result.json()
+       result = await result.json()
       if(result){
           setUserlist(result) //will show the searched product
-      }
+        console.log(setUserlist)
+        }
   }
   else{
       getUserData(); //if no words are searched then whole list will be shown.
@@ -48,10 +63,10 @@ const searchHandle = async (event)=>{
 
   return (
     <>
-    <h1>User Data List</h1>
+    <h1 id='datalist-h1'>User Data List</h1>
 
-    <input className="search-input" onChange={searchHandle} type="search" placeholder="Search"/>
-    <button className="btn btn-info" type="submit" id='search-btn' >Search</button>
+    <input className="search-input" onChange={searchHandle}  type="search" placeholder="Search"/>
+    {/* <button className="btn btn-info" type="submit" onClick={searchHandle} id='search-btn' >Search</button> */}
 
     <div className="userdata-list " >
           <table className="table table-dark">
@@ -68,7 +83,7 @@ const searchHandle = async (event)=>{
                 <td>Update</td>
               </tr>
               {
-                userlist.length>0? userlist.map((item, index) =>              
+                  userlist.length>0? userlist.map((item, index) =>              
                   <tr key={item._id}>
                  <td>{index + 1}</td> 
                   <td>{item.name}</td>
@@ -80,8 +95,8 @@ const searchHandle = async (event)=>{
                   <td><button className="btn btn-secondary" id='delete-btn' onClick={()=>deleteData(item._id)}>Delete</button></td>
                   <td><Link to={"/updatedata/"+item._id}>Edit</Link></td>
                   </tr> 
-                  ):<h1>No Result Found.</h1> 
-                  }
+                  ) : <tr></tr>
+  }
             </tbody>
           </table>
       </div>

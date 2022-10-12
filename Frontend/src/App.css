@@ -1,4 +1,5 @@
 
+
 h1{
   text-align: center;
 
@@ -24,26 +25,63 @@ margin: -12px 200px;
 }
 
 .search-input{
-  width: 500px;
+  width: 848px;
   height: 40px;
   border: 2px solid black;
   border-radius: 10px;
-  margin: 25px 201px;
+  margin: 25px 197px;
 }
 
-#search-btn{    height: 38px;
-  width: 85px;
-  margin: 0px -196px;
-  font-size: 17px;
-  align-items: center;
-  padding: initial;
-  margin-bottom: 5px;
+#datalist-h1{
+  margin-top: 14px;
 }
-
 
 #delete-btn{
   height: 30px;
   width: 60px;
   font-size: 13px;
   padding: 5px;
+}
+
+
+#name-input{
+  margin: 14px 0px;
+  border: 1px solid black;
+}
+
+#description-input{
+  width: 379px;
+  height: 70px;
+  margin: -45px 99px;
+  border: 1px solid black;
+}
+#contactnum-input{
+  margin: 64px 0px;
+  border: 1px solid black;
+}
+#email-input{
+  margin: 16px -2px;
+  border: 1px solid black;
+}
+
+#email-container{
+  margin-top: -53px;
+}
+
+.Address{
+  margin: 11px 0px;
+}
+
+
+#add-submitbtn{
+  margin: -155px 0px;
+  width: 100px;
+}
+
+#contactnum-label{
+  margin-top: 50px;
+}
+
+.add-userdetail-h1{
+  padding-top: 22px;
 }
