@@ -8,8 +8,9 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import List from './components/List';
 import AddDetail from './components/AddDetail'
+import UpdateData from './components/UpdateData';
+import GetData from './components/GetData';
 
 function App() {
   return (
@@ -17,10 +18,11 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<List />}>
+          <Route exact path="/" element={<GetData />}>
           </Route>
           <Route exact path="/form" element={<AddDetail />}>
           </Route>
+          <Route path='/updatedata/:id' element={<UpdateData/>}></Route>
         </Routes>
       </Router>
     </>

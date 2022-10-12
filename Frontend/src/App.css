@@ -12,3 +12,38 @@ h1{
 padding: 15px 20px;
 margin: 35px 320px;
 }
+
+.userdata-list{
+  width: 100px;
+}
+.table{
+  width: 300px;
+  height: 350px;
+margin: -12px 200px;
+/* margin-bottom: 20px; */
+}
+
+.search-input{
+  width: 500px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 25px 201px;
+}
+
+#search-btn{    height: 38px;
+  width: 85px;
+  margin: 0px -196px;
+  font-size: 17px;
+  align-items: center;
+  padding: initial;
+  margin-bottom: 5px;
+}
+
+
+#delete-btn{
+  height: 30px;
+  width: 60px;
+  font-size: 13px;
+  padding: 5px;
+}
