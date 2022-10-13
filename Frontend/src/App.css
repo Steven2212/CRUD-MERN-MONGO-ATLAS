@@ -19,20 +19,23 @@ margin: 35px 320px;
 }
 .table{
   width: 300px;
-  height: 350px;
-margin: -12px 200px;
+  height: 335px;
+margin: 4px 200px;
 /* margin-bottom: 20px; */
 }
 
 .search-input{
-  width: 848px;
+  width: 500px;
   height: 40px;
   border: 2px solid black;
   border-radius: 10px;
-  margin: 25px 197px;
+  margin: 3px 394px;
 }
 
 #datalist-h1{
+  margin-top: 14px;
+}
+#updateform-h1{
   margin-top: 14px;
 }
 
@@ -84,4 +87,24 @@ margin: -12px 200px;
 
 .add-userdetail-h1{
   padding-top: 22px;
+}
+
+.pagination button.active{
+  font-weight: 900;
+  border-color: #101010;
+  background: #ffe400;
+  color: #101010;
+}
+
+
+.pagination-box{
+display: grid;
+place-items: center;
+}
+
+#pagination{
+  display: flexbox;
+  flex-direction: row;
+  margin: 4px 10px;
+  
 }
