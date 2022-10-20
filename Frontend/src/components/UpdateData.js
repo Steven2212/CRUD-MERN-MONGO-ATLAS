@@ -1,81 +1,224 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
+import React from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const UpdateData = () => {
+const UpdateData = (props) => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [contactnum, setContactnum] = useState("");
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+
+  useEffect(() => {
+    updateBtn();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  //To Prefill the form when clicken on edit button.
+
+  const updateBtn = async () => {
+    let result = await fetch(`http://localhost:5000/userdata/${params.id}`);
+    result = await result.json();
+    console.log(result);
+
+    setName(result.name); 
+    setDescription(result.description);
+    setContactnum(result.contactnum);
+    setEmail(result.email);
+    setState(result.state);
+    setCity(result.city);
+  };
+
+//Update or Edit Data in MongoDB.
   
-  const params = useParams()
-  const navigate = useNavigate()
-const [name, setName] = useState("")
-const [description, setDescription] = useState("")
-const [contactnum, setContactnum] = useState("")
-const [email, setEmail] = useState("")
-const [state, setState] = useState("")
-const [city, setCity] = useState("")
+  const updatedata = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !description || !contactnum || !state || !city) {
+      alert("Error! Please fill all the fields.");
+    } else {
+      let result = await fetch(
+        `http://localhost:5000/updatedata/${params.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            name,
+            description,
+            contactnum,
+            email,
+            state,
+            city,
+          }),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      result = await result.json();
+      console.log(result);
+      navigate("/"); 
+      props.showAlert("User Data has been updated successfully.","success")
+    }
+  };
 
-useEffect(() => {
-  updateBtn();
-}, [])
+  // State and City dropdowns update input:
 
+  const Maharashtra = ["Choose City", "Mumbai", "Pune", "Thane"];
+  const Karnataka = ["Choose City", "Bangalore", "Mysore", "Hubli"];
+  const TamilNadu = ["Choose City", "Chennai", "Madurai", "Coimbatore"];
 
-const updateBtn = async ()=>{
-  let result = await fetch(`http://localhost:5000/userdata/${params.id}`)
-  result = await result.json()
-  console.log(result)
-  setName(result.name) //to fill the name automatically in the input field when clicked on update in product list page.
-  setDescription(result.description)
-  setContactnum(result.contactnum)
-  setEmail(result.email)
-  setState(result.state)
-  setCity(result.city)
+  /** Type variable to store different array for different dropdown */
+  let type = null;
+
+  /** This will be used to create set of options that user will see */
+  let options = null;
+
+  /** Setting Type variable according to dropdown */
+  if (state === "Maharashtra") {
+    type = Maharashtra;
+  } else if (state === "Karnataka") {
+    type = Karnataka;
+  } else if (state === "Tamil Nadu") {
+    type = TamilNadu;
   }
 
-const updatedata = async ()=>{
+  if (type) {
+    options = type.map((el) => <option key={el}>{el}</option>);
+  }
 
-  let result = await fetch(`http://localhost:5000/updatedata/${params.id}`,{
-        method:'PUT',
-        body:JSON.stringify({name,description,contactnum,email,state,city}),
-        headers:{'Content-Type':'application/json'}
-    })
-    result=await result.json()    
-    console.log(result);
-    navigate('/') //once update is done, we will be navigated to the homepage.
-}
-
-
-
-
-
-
-  return ( 
+  return (
     <>
-    
-    <input type="text" onChange={(e)=>setName(e.target.value)} value={name} className='inputBox' placeholder='Enter Company name' />
-        {/* {error && !name && <span className="invalid-input"> Enter valid name.</span>} */}
-        {/* in the above code if default error is false (which means we are entering newly) and name is not there then it will send this error. */}
-       
-        <input type="text" onChange={(e)=>setDescription(e.target.value)} value={description}  className='inputBox' placeholder='Enter description' />
-        {/* {error && !description && <span className="invalid-input"> Enter valid description.</span>} */}
+      <h1 id="updateform-h1">Update Form</h1>
+      <div className="form-box" style={{"backgroundColor":"lightyellow"}}>
+        <form method="put" encType="multipart/form-data">
+  
+        {/* Company Name */}
+  
+          <div className="form-group row">
+            <label htmlFor="inputPassword" className="col-sm-2 col-form-label">
+              Company Name :
+            </label>
+            <div className="col-sm-8">
+              <input
+                type="text"
+                value={name}
+                autoComplete="off"
+                className="form-control"
+                id="name-input"
+                name="name"
+                placeholder="Enter Company Name"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          </div>
 
-        <input type="text" onChange={(e)=>setContactnum(e.target.value)} value={contactnum}  className='inputBox' placeholder='Enter Contact number' />
-        {/* {error && !contactnum && <span className="invalid-input"> Enter valid contact number.</span>} */}
+          {/* Description */}
 
-        <input type="text" onChange={(e)=>setEmail(e.target.value)} value={email}  className='inputBox' placeholder='Enter Email id' />
-        {/* {error && !email && <span className="invalid-input"> Enter valid Email</span>} */}
+          <div className="form-group">
+            <label htmlFor="exampleFormControlTextarea1">
+              Company <br />
+              Description :
+            </label>
+            <textarea
+              value={description}
+              className="form-control"
+              autoComplete="off"
+              type="text"
+              id="description-input"
+              name="description"
+              placeholder="Enter Description"
+              rows="2"
+              onChange={(e) => setDescription(e.target.value)}
+            ></textarea>
+          </div>
 
-        <input type="text" onChange={(e)=>setState(e.target.value)} value={state}  className='inputBox' placeholder='Enter State name.' />
-        {/* {error && !state && <span className="invalid-input"> Enter valid State</span>} */}
+          {/* Contact Number */}
 
-        <input type="text" onChange={(e)=>setCity(e.target.value)} value={city}  className='inputBox' placeholder='Enter City name.' />
-        {/* {error && !city && <span className="invalid-input"> Enter valid City </span>} */}
+          <div className="form-group row">
+            <label
+              htmlFor="inputPassword"
+              id="contactnum-label"
+              className="col-sm-2 col-form-label"
+            >
+              Contact Number :
+            </label>
+            <div className="col-sm-8">
+              <input
+                type="text"
+                className="form-control"
+                id="contactnum-input"
+                name="contactnum"
+                autoComplete="off"
+                placeholder="Enter Contact Number"
+                value={contactnum}
+                onChange={(e) => setContactnum(e.target.value)}
+              />
+            </div>
+          </div>
 
-        <button onClick={updatedata}  className='appButton' type='button' >Update</button>
+          {/* Email ID */}
 
+          <div className="form-group row" id="email-container">
+            <label
+              htmlFor="inputPassword"
+              id="email-label"
+              className="col-sm-2 col-form-label"
+            >
+              Contact Email :
+            </label>
+            <div className="col-sm-8">
+              <input
+                type="text"
+                className="form-control"
+                autoComplete="off"
+                id="email-input"
+                name="email"
+                value={email}
+                placeholder="Enter Email Address"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
 
+          {/* State Name */}
 
+          <div className="Address">
+            <div>
+              <select value={state} onChange={(e) => setState(e.target.value)}>
+                <option>Choose State :</option>
+                <option>Maharashtra</option>
+                <option>Karnataka</option>
+                <option>Tamil Nadu</option>
+              </select>
+            </div>
+
+            {/* City Name */}
+
+            <div>
+              <select value={city} onChange={(e) => setCity(e.target.value)}>
+                {
+                  /** This is where we have used our options variable */
+                  options
+                }
+              </select>
+            </div>
+          </div>
+
+            {/* Update Button */}
+
+          <button
+            type="submit"
+            id="update-submitbtn"
+            className="btn btn-primary"
+            onClick={updatedata}
+          >
+            Update
+          </button>
+        </form>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default UpdateData
+export default UpdateData;

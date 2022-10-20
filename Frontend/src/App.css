@@ -1,30 +1,79 @@
 
-
-h1{
+h1 {
   text-align: center;
-
 }
 
-.form-box{
+/* Add User Details Page */
+
+.form-box {
   border: 2px solid black;
   border-radius: 10px;
   width: 616px;
   height: 416px;
-padding: 15px 20px;
-margin: 35px 320px;
+  padding: 15px 20px;
+  margin: 35px 320px;
+  background-color: lightskyblue;
 }
 
-.userdata-list{
+#name-input {
+  margin: 14px 0px;
+  border: 1px solid black;
+}
+
+#description-input {
+  width: 379px;
+  height: 70px;
+  margin: -45px 99px;
+  border: 1px solid black;
+}
+#contactnum-input {
+  margin: 64px 0px;
+  border: 1px solid black;
+}
+#email-input {
+  margin: 16px -2px;
+  border: 1px solid black;
+}
+
+#email-container {
+  margin-top: -53px;
+}
+
+.Address {
+  margin: 11px 0px;
+}
+
+#add-submitbtn {
+  margin: -155px 0px;
   width: 100px;
 }
-.table{
-  width: 300px;
-  height: 335px;
-margin: 4px 200px;
-/* margin-bottom: 20px; */
+
+#contactnum-label {
+  margin-top: 50px;
 }
 
-.search-input{
+.add-userdetail-h1 {
+  padding-top: 22px;
+}
+
+/* Data Table */
+
+.userdata-list {
+  width: 100px;
+}
+.table {
+  width: 300px;
+  height: 335px;
+  margin: 4px 200px;
+}
+
+#datalist-h1 {
+  margin-top: 14px;
+}
+
+/* Search */
+
+.search-input {
   width: 500px;
   height: 40px;
   border: 2px solid black;
@@ -32,79 +81,37 @@ margin: 4px 200px;
   margin: 3px 394px;
 }
 
-#datalist-h1{
-  margin-top: 14px;
-}
-#updateform-h1{
+/* Update */
+
+#updateform-h1 {
   margin-top: 14px;
 }
 
-#delete-btn{
+/* Delete */
+
+#delete-btn {
   height: 30px;
   width: 60px;
   font-size: 13px;
   padding: 5px;
 }
 
+/* Pagination */
 
-#name-input{
-  margin: 14px 0px;
-  border: 1px solid black;
-}
-
-#description-input{
-  width: 379px;
-  height: 70px;
-  margin: -45px 99px;
-  border: 1px solid black;
-}
-#contactnum-input{
-  margin: 64px 0px;
-  border: 1px solid black;
-}
-#email-input{
-  margin: 16px -2px;
-  border: 1px solid black;
-}
-
-#email-container{
-  margin-top: -53px;
-}
-
-.Address{
-  margin: 11px 0px;
-}
-
-
-#add-submitbtn{
-  margin: -155px 0px;
-  width: 100px;
-}
-
-#contactnum-label{
-  margin-top: 50px;
-}
-
-.add-userdetail-h1{
-  padding-top: 22px;
-}
-
-.pagination button.active{
+.pagination button.active {
   font-weight: 900;
   border-color: #101010;
   background: #ffe400;
   color: #101010;
 }
 
-
-.pagination-box{
-display: grid;
-place-items: center;
+.pagination-box {
+  display: grid;
+  place-items: center;
 }
 
-#pagination{
+#pagination {
   display: flexbox;
   flex-direction: row;
   margin: 4px 10px;
-  
 }

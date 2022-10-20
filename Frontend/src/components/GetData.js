@@ -1,107 +1,132 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import {Link} from 'react-router-dom'
+import React from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Pagination from "./Pagination";
+import Alert from "./Alert";
 
-  const GetData = () => {
+const GetData = (props) => {
 
-    const [userlist, setUserlist] = useState([])
-    // const [value, setValue] = useState([])
-    // const [dataSource, setDataSource] = useState([userlist])
-    // const [tableFilter, setTableFilter] = useState([])
-    
-    useEffect(() => {
-        getUserData();
-    }, [])
+  const [userlist, setUserlist] = useState([]);
 
-    //To Fetch Data
-    const getUserData = async () => {
-        let result = await fetch("http://localhost:5000/userdata");
-        result = await result.json()
-        setUserlist(result);
+  //For Pagination
+  const [currentPage, setCurrentPage] = useState([1]);
+  const [postsPerPage, setPostsPerPage] = useState([5]);
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = userlist.slice(firstPostIndex, lastPostIndex);
+
+  // To see the list of data immediately once data is updated or deleted.
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  //To Fetch Data
+
+  const getUserData = async () => {
+    let result = await fetch("http://localhost:5000/userdata");
+    result = await result.json();
+    setUserlist(result);
+  };
+
+  //To Delete Data :
+
+  async function deleteData(id) {
+    let result = fetch(`http://localhost:5000/deletedata/${id}`, {
+      method: "DELETE",
+    });
+    getUserData();
+    if (result) {
+      getUserData();
+      props.showAlert("User Data has been deleted successfully.","success")
     }
-  
-//To Delete Data :
-
-  async  function deleteData(id){
-    let result = fetch(`http://localhost:5000/deletedata/${id}`,{
-        method:'DELETE'})
-        // result = await result.json() 
-        getUserData()
-        if (result) {
-          getUserData(); //when we delete the api, the change should be visible immediately. hence we put getProducts in useEffect hook. Now it will display the products immediately as the product gets deleted.
-        } 
   }
-  
-//To Search Data :
 
-// function filterData(e){
-//   if(e.target.value !== ""){
-//     const filterTable = dataSource.filter(o=>Object.keys(o).some(k=>
-//       String(o[k]).toLowerCase().includes(e.target.value.toLowerCase())));setTableFilter([...filterTable])
-//   } else{
-//     setValue(e.target.value)
-//     setDataSource([...dataSource])
-//   }
+  //To Search Data :
 
-// }
-
-const searchHandle = async (event)=>{
-  let key = event.target.value //the words we search
-  if(key){     //if any word is searched and it matches, then show that data.
-      let result= await fetch(`http://localhost:5000/search/${key}`)
-       result = await result.json()
-      if(result){
-          setUserlist(result) //will show the searched product
-        console.log(setUserlist)
-        }
-  }
-  else{
-      getUserData(); //if no words are searched then whole list will be shown.
-  }
-}
-
+  const searchHandle = async (event) => {
+    let key = event.target.value; 
+    if (key) {
+      let result = await fetch(`http://localhost:5000/search/${key}`);
+      result = await result.json();
+      if (result) {
+        setUserlist(result); 
+        console.log(setUserlist);
+      }
+    } else {
+      getUserData(); //if no words are searched then whole list of data will be shown.
+    }
+  };
 
   return (
     <>
-    <h1 id='datalist-h1'>User Data List</h1>
+      <h1 id="datalist-h1">Company Data List</h1>
 
-    <input className="search-input" onChange={searchHandle}  type="search" placeholder="Search"/>
-    {/* <button className="btn btn-info" type="submit" onClick={searchHandle} id='search-btn' >Search</button> */}
+      {/* Search Input */}
 
-    <div className="userdata-list " >
-          <table className="table table-dark">
-            <tbody>
-              <tr id='table-head' >
-                <td>Sr.No</td>
-                <td>Company Name</td>
-                <td>Description</td>
-                <td>Contact Number</td>
-                <td>Email</td>
-                <td>State</td>
-                <td>City</td>
-                <td>Delete</td>
-                <td>Update</td>
-              </tr>
-              {
-                  userlist.length>0? userlist.map((item, index) =>              
-                  <tr key={item._id}>
-                 <td>{index + 1}</td> 
+      <input
+        className="search-input"
+        onChange={searchHandle}
+        type="search"
+        placeholder="Search"
+      />
+
+      {/* Data Table */}
+
+      <div className="userdata-list ">
+        <table className="table table-dark">
+          <tbody>
+            <tr id="table-head">
+              <td>Sr.No</td>
+              <td>Company Name</td>
+              <td>Description</td>
+              <td>Contact Number</td>
+              <td>Email</td>
+              <td>State</td>
+              <td>City</td>
+              <td>Delete</td>
+              <td>Update</td>
+            </tr>
+            {currentPosts.length > 0 ? (
+              currentPosts.map((item, index) => (
+                <tr key={item._id}>
+                  <td>{index + 1}</td>
                   <td>{item.name}</td>
                   <td>{item.description}</td>
                   <td>{item.contactnum}</td>
                   <td>{item.email}</td>
                   <td>{item.state}</td>
-                  <td>{item.city}</td>              
-                  <td><button className="btn btn-secondary" id='delete-btn' onClick={()=>deleteData(item._id)}>Delete</button></td>
-                  <td><Link to={"/updatedata/"+item._id}>Edit</Link></td>
-                  </tr> 
-                  ) : <tr></tr>
-  }
-            </tbody>
-          </table>
+                  <td>{item.city}</td>
+                  <td>
+                    <button
+                      className="btn btn-secondary"
+                      id="delete-btn"
+                      onClick={() => deleteData(item._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                  <td>
+                    <Link to={"/updatedata/" + item._id}>Edit</Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr></tr>
+            )}
+          </tbody>
+        </table>
       </div>
-    </>
-  )
-  }
 
-export default GetData ;
+      {/* Pagination */}
+
+      <Pagination
+        totalPosts={userlist.length}
+        postsPerPage={postsPerPage}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+      />
+    </>
+  );
+};
+
+export default GetData;

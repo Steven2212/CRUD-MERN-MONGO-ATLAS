@@ -2,43 +2,27 @@ const express = require('express')
 const cors = require('cors')
 const multer = require('multer')
 const app = express()
-
-require('./db/config')
 const User = require('./db/User')
+require('./db/config')
 app.use(express.json()) 
 app.use(cors())
 
-// app.post('/form', async  (req,res)=>{
-//     let user = new User(req.body); 
-//     let result = await user.save(); 
-//     res.send(result) 
-// })
+//POST API to send data to MongoDB.
 
-const upload = multer({
-    storage:multer.diskStorage({
-        destination:function(req,file,cb) //destination means where we want to save our file.
-        {
-            cb(null,"uploads") //uploads is our folder name where it will be saved.
-        },
-        filename:function(req,file,cb){
-            cb(null,file.filename+"-"+Date.now()+".jpg")
-        }
-    })
-}).single("image") //single file we are going to upload now.
-
-app.post('/form',upload, async (req,res)=>{
+app.post('/form', async (req,res)=>{
     let user = new User({
     name:req.body.name,
     description:req.body.description,
     contactnum:req.body.contactnum,
     email:req.body.email,
-    // image: req.file.filename,
     state:req.body.state,
     city:req.body.city
     }); 
     let result = await user.save(); 
     res.send(result) 
 })
+
+//GET API to fetch data from MongoDB.
 
 app.get('/userdata',async(req,res)=>{
     let userdata = await User.find();
@@ -48,7 +32,7 @@ app.get('/userdata',async(req,res)=>{
 })
 
 
-//SINGLE PRODUCT GET API
+//GET API to fetch data of single user from MongoDB.
 app.get('/userdata/:id',async (req,res)=>{
     let result = await User.findOne({_id:req.params.id})
     if(result){
@@ -56,24 +40,26 @@ app.get('/userdata/:id',async (req,res)=>{
     } else{result:"No record found."}
 })
 
-
+//UPDATE API to update or edit data in MongoDB.
 
 app.put('/updatedata/:id', async (req,res)=>{
     let result = await User.updateOne(
-        {_id:req.params.id}, // with reference to this id we will fetch or identify the product which we want to update.
+        {_id:req.params.id},
         {   
-            $set:req.body  //these are the things which we will update.
+            $set:req.body 
         }
         )
         res.send(result)
 })
+
+//DELETE API to delete data from MongoDB.
 
 app.delete('/deletedata/:id',async(req,res)=>{
     let result = await User.deleteOne({_id:req.params.id});
     res.send(result)
 })
 
-
+//SEARCH API to search data from MongoDB.
 
 app.get('/search/:key',async(req,res)=>{
     let result = await User.find(
@@ -89,10 +75,5 @@ app.get('/search/:key',async(req,res)=>{
        })
        res.send(result)
    })
-   
-
-app.get('/',(req,res)=>{
-    res.send("Hello backend here.")
-})
 
 app.listen(5000)
