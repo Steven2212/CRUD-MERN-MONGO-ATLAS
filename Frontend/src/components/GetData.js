@@ -1,19 +1,37 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Pagination from "./Pagination";
-import Alert from "./Alert";
+import {Pagination} from "antd";
+
 
 const GetData = (props) => {
 
   const [userlist, setUserlist] = useState([]);
 
   //For Pagination
-  const [currentPage, setCurrentPage] = useState([1]);
-  const [postsPerPage, setPostsPerPage] = useState([5]);
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = userlist.slice(firstPostIndex, lastPostIndex);
+
+  const [posts, setPosts] = useState([])
+  const [total, setTotal] = useState("")
+  const [page, setPage] = useState(1)
+  const [postPerPage, setPostPerPage] = useState(10) //keep it 10 or 5.
+
+const indexOfLastPage = page * postPerPage
+const indexOfFirstPage = indexOfLastPage - postPerPage
+const currentPosts = posts.slice(indexOfFirstPage, indexOfLastPage)
+
+const onShowSizeChange =(current,pageSize)=>{
+  setPostPerPage(pageSize)
+}
+
+const itemRender = (current,type,originalElement) =>{
+  if(type === "prev"){
+    return <Link>Previous</Link>
+  }
+  if(type === "next"){
+    return <Link>Next</Link>
+  }
+  return originalElement;
+}
 
   // To see the list of data immediately once data is updated or deleted.
   useEffect(() => {
@@ -26,6 +44,9 @@ const GetData = (props) => {
     let result = await fetch("http://localhost:5000/userdata");
     result = await result.json();
     setUserlist(result);
+    setPosts(result);
+    setTotal(result.length)
+
   };
 
   //To Delete Data :
@@ -118,13 +139,20 @@ const GetData = (props) => {
       </div>
 
       {/* Pagination */}
-
+        <div className="pagination-box">
+  
       <Pagination
-        totalPosts={userlist.length}
-        postsPerPage={postsPerPage}
-        setCurrentPage={setCurrentPage}
-        currentPage={currentPage}
-      />
+        onChange={(value)=>setPage(value)}
+        pageSize={postPerPage}
+        total = {total}
+        current={page}
+        showSizeChanger
+        showQuickJumper
+        onShowSizeChange={onShowSizeChange}
+        itemRender={itemRender}
+
+/>
+</div>
     </>
   );
 };

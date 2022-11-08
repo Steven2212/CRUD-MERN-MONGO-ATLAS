@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 //Schema
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  description: { type: String, required: true },
-  contactnum: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  state: { type: String, required: true },
-  city: { type: String, required: true },
+  name: String,
+  description: String,
+  contactnum:String,
+  email: String,
+  state: { type: String},
+  city: { type: String}
 });
 
 //Model

@@ -2,6 +2,7 @@
 import './App.css';
 import Navbar from './components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "antd/dist/antd.css";
 import React from 'react';
 import {
   BrowserRouter as Router,

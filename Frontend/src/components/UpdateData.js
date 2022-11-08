@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const UpdateData = (props) => {
   const params = useParams();
@@ -12,6 +13,14 @@ const UpdateData = (props) => {
   const [email, setEmail] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    formState: { errors },
+  } = useForm();
+
 
   useEffect(() => {
     updateBtn();
@@ -90,16 +99,16 @@ const UpdateData = (props) => {
   return (
     <>
       <h1 id="updateform-h1">Update Form</h1>
-      <div className="form-box" style={{"backgroundColor":"lightyellow"}}>
-        <form method="put" encType="multipart/form-data">
+      <div className="form-box" style={{"backgroundColor":"lightgoldenrodyellow"}}>
+        <form  onSubmit={handleSubmit(updatedata)} method="put" encType="multipart/form-data">
   
         {/* Company Name */}
   
-          <div className="form-group row">
-            <label htmlFor="inputPassword" className="col-sm-2 col-form-label">
+          <div className="form-group">
+            <label>
               Company Name :
             </label>
-            <div className="col-sm-8">
+            <div >
               <input
                 type="text"
                 value={name}
@@ -108,17 +117,25 @@ const UpdateData = (props) => {
                 id="name-input"
                 name="name"
                 placeholder="Enter Company Name"
-                onChange={(e) => setName(e.target.value)}
+                {...register("name", { required: "Name is required." })}
+                onKeyUp={() => {
+                  trigger("name");
+                }}
+
+                onInput={(e) => setName(e.target.value)}
               />
+              
+            {errors.name && (
+              <small className="text-danger">{errors.name.message}</small>
+            )}
             </div>
           </div>
 
           {/* Description */}
 
           <div className="form-group">
-            <label htmlFor="exampleFormControlTextarea1">
-              Company <br />
-              Description :
+            <label>
+              Company Description :
             </label>
             <textarea
               value={description}
@@ -128,22 +145,38 @@ const UpdateData = (props) => {
               id="description-input"
               name="description"
               placeholder="Enter Description"
+              {...register("description", {
+                required: "Description is required.",
+                minLength: {
+                  value: 10,
+                  message: "Minimum required length is 10.",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Max allowed length is 50.",
+                },
+              })}
+              onKeyUp={() => {
+                trigger("description");
+              }}
               rows="2"
-              onChange={(e) => setDescription(e.target.value)}
+              onInput={(e) => setDescription(e.target.value)}
             ></textarea>
+          {errors.description && (
+              <small className="text-danger descriptionerror">
+                {errors.description.message}
+              </small>
+            )}
           </div>
 
           {/* Contact Number */}
 
           <div className="form-group row">
             <label
-              htmlFor="inputPassword"
-              id="contactnum-label"
-              className="col-sm-2 col-form-label"
             >
               Contact Number :
             </label>
-            <div className="col-sm-8">
+            <div>
               <input
                 type="text"
                 className="form-control"
@@ -151,23 +184,36 @@ const UpdateData = (props) => {
                 name="contactnum"
                 autoComplete="off"
                 placeholder="Enter Contact Number"
+                {...register("contactnum", {
+                  required: "Contact Number is required.",
+                  pattern: {
+                    value:
+                      /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
+                    message: "Invalid Phone Number.",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("contactnum");
+                }}
+  
                 value={contactnum}
-                onChange={(e) => setContactnum(e.target.value)}
+                onInput={(e) => setContactnum(e.target.value)}
               />
+            {errors.contactnum && (
+              <small className="text-danger">{errors.contactnum.message}</small>
+            )}
+         
             </div>
           </div>
 
           {/* Email ID */}
 
-          <div className="form-group row" id="email-container">
+          <div className="form-group" id="email-container">
             <label
-              htmlFor="inputPassword"
-              id="email-label"
-              className="col-sm-2 col-form-label"
             >
               Contact Email :
             </label>
-            <div className="col-sm-8">
+            <div >
               <input
                 type="text"
                 className="form-control"
@@ -176,32 +222,63 @@ const UpdateData = (props) => {
                 name="email"
                 value={email}
                 placeholder="Enter Email Address"
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email", {
+                  required: "Email is required.",
+                  pattern: {
+                    value: /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,4}$/i,
+                    message: "Invalid email address.",
+                  },
+                })}
+                onKeyUp={() => {
+                  trigger("email");
+                }}
+           
+                onInput={(e) => setEmail(e.target.value)}
               />
+               {errors.email && (
+              <small className="text-danger">{errors.email.message}</small>
+            )}
+         
             </div>
           </div>
 
           {/* State Name */}
 
-          <div className="Address">
+          <div className="Place">
             <div>
-              <select value={state} onChange={(e) => setState(e.target.value)}>
+              <select {...register("state", { required: "State name is required." })}
+                                 onKeyUp={() => {
+                                  trigger("state");
+                                }}
+                 value={state} onInput={(e) => setState(e.target.value)}>
                 <option>Choose State :</option>
                 <option>Maharashtra</option>
                 <option>Karnataka</option>
                 <option>Tamil Nadu</option>
               </select>
+              {errors.state && (
+              <small className="text-danger">{errors.state.message}</small>
+            )}
+
             </div>
 
             {/* City Name */}
 
-            <div>
-              <select value={city} onChange={(e) => setCity(e.target.value)}>
+            <div className="city">
+              <select {...register("city", { required: "City name is required." })}
+                                onKeyUp={() => {
+                                  trigger("city");
+                                }}
+                value={city} onInput={(e) => setCity(e.target.value)}>
                 {
                   /** This is where we have used our options variable */
                   options
                 }
               </select>
+              {errors.city && (
+              <small className="text-danger">{errors.city.message}</small>
+            )}
+
             </div>
           </div>
 

@@ -5,51 +5,42 @@ h1 {
 
 /* Add User Details Page */
 
+/* .form-box {
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 616px;
+  height: 100%;
+  padding: 15px 20px;
+  margin: 35px 320px;
+  background-color: lightskyblue;
+} */
+
+.invalid {
+  border: 1px solid red;
+}
 .form-box {
   border: 2px solid black;
   border-radius: 10px;
   width: 616px;
-  height: 416px;
+  height: 100%;
   padding: 15px 20px;
   margin: 35px 320px;
-  background-color: lightskyblue;
+  background-color: lightgray;
+}
+#add-submitbtn{
+  margin-top: 15px;
 }
 
-#name-input {
-  margin: 14px 0px;
-  border: 1px solid black;
+label{
+  margin-bottom: 5px;
 }
 
-#description-input {
-  width: 379px;
-  height: 70px;
-  margin: -45px 99px;
-  border: 1px solid black;
-}
-#contactnum-input {
-  margin: 64px 0px;
-  border: 1px solid black;
-}
-#email-input {
-  margin: 16px -2px;
-  border: 1px solid black;
+.Place{
+  margin-top: 8px;
 }
 
-#email-container {
-  margin-top: -53px;
-}
-
-.Address {
-  margin: 11px 0px;
-}
-
-#add-submitbtn {
-  margin: -155px 0px;
-  width: 100px;
-}
-
-#contactnum-label {
-  margin-top: 50px;
+.city{
+  margin-top: 5px;
 }
 
 .add-userdetail-h1 {
@@ -87,6 +78,11 @@ h1 {
   margin-top: 14px;
 }
 
+#update-submitbtn{
+  margin-top: 15px;
+}
+
+
 /* Delete */
 
 #delete-btn {
@@ -110,8 +106,10 @@ h1 {
   place-items: center;
 }
 
-#pagination {
+/* #pagination {
   display: flexbox;
   flex-direction: row;
   margin: 4px 10px;
-}
+} */
+
+
