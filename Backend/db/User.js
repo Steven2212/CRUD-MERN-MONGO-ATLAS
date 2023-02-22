@@ -13,4 +13,5 @@ const userSchema = new mongoose.Schema({
 
 //Model
 
-module.exports = mongoose.model("userdetails", userSchema); //userdetails is the collection name in our Mongo Database.
+// module.exports = mongoose.model("userdetails", userSchema); //userdetails is the collection name in our Mongo Database.
+module.exports = mongoose.model("users", userSchema); //userdetails is the collection name in our Mongo Database.
