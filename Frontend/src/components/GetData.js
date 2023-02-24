@@ -42,6 +42,8 @@ const itemRender = (current,type,originalElement) =>{
 
   const getUserData = async () => {
     let result = await fetch("http://localhost:5000/userdata");
+    // let result = await fetch("http://ec2-13-232-185-49.ap-south-1.compute.amazonaws.com/userdata");
+    // let result = await fetch("http://13.232.185.49:5000/userdata");
     result = await result.json();
     // setUserlist(result); //Use this when we are not using Pagination.
     setPosts(result);
@@ -53,6 +55,8 @@ const itemRender = (current,type,originalElement) =>{
 
   async function deleteData(id) {
     let result = fetch(`http://localhost:5000/deletedata/${id}`, {
+    // let result = fetch(`http://ec2-13-232-185-49.ap-south-1.compute.amazonaws.com/deletedata/${id}`, {
+    // let result = fetch(`http://13.232.185.49:5000/deletedata/${id}`, {
       method: "DELETE",
     });
     getUserData();
@@ -81,6 +85,8 @@ const itemRender = (current,type,originalElement) =>{
     let key = event.target.value; 
     if (key) {
       let result = await fetch(`http://localhost:5000/search/${key}`);
+      // let result = await fetch(`http://ec2-13-232-185-49.ap-south-1.compute.amazonaws.com/search/${key}`);
+      // let result = await fetch(`http://13.232.185.49:5000/search/${key}`);
       result = await result.json();
       if (result) {
         // setUserlist(result); //Use this when we are not using Pagination.
@@ -178,3 +184,4 @@ const itemRender = (current,type,originalElement) =>{
 };
 
 export default GetData;
+

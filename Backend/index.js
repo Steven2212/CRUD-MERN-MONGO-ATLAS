@@ -22,6 +22,13 @@ app.post('/form', async (req,res)=>{
     res.send(result) 
 })
 
+//Backend Home Screen.
+
+app.get('/',async(req,res)=>{
+    res.send("Backend HomeScreen. Connected Successfully.") 
+})
+
+
 //GET API to fetch data from MongoDB.
 
 app.get('/userdata',async(req,res)=>{

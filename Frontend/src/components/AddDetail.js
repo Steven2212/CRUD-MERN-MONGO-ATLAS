@@ -24,6 +24,7 @@ const Home = (props) => {
   const submitbtn = async () => {
     // e.preventDefault();
     let result = await fetch(`http://localhost:5000/form`, {
+    // let result = await fetch(`http://ec2-13-232-185-49.ap-south-1.compute.amazonaws.com:5000/form`, {
       method: "post",
       body: JSON.stringify({
         name,
